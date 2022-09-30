@@ -18,13 +18,18 @@ int main()
     Font font;
     Text text;
 
-    font.loadFromFile("KOMIKAP_.ttf");
+    if (!font.loadFromFile("KOMIKAP_.ttf"))
+    {
+        cout << "Error: Font File Not Found" << endl;
+    }
+    
     text.setFont(font);
 
     Vector2f VertexArray;
 
-
-
+    VideoMode vm(width, height);
+    RenderWindow window (vm, "Mandelbrot", Style::Default);
+    
 
     while (window.isOpen())
     {
