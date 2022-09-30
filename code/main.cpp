@@ -11,7 +11,24 @@ using namespace sf;
 
 int main()
 {
-    VideoMode::getDesktopMode().width;
-    VideoMode::getDesktopMode().height;
+    float width = VideoMode::getDesktopMode().width;
+    float height = VideoMode::getDesktopMode().height;
+    float aspect_ratio = height / width;
+
+    Font font;
+    Text text;
+
+    font.loadFromFile("KOMIKAP_.ttf");
+    text.setFont(font);
+
+    Vector2f VertexArray;
+
+
+
+
+    while (window.isOpen())
+    {
+
+    }
     
 }
