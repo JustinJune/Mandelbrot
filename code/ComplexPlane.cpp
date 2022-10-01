@@ -44,6 +44,11 @@ void ComplexPlane::setCenter(Vector2f coord)
     m_view.setCenter(coord);
 }
 
+View ComplexPlane::getView()
+{
+    
+}
+
 void ComplexPlane::setMouseLocation(Vector2f coord)
 {
     m_mouseLocation = coord;
