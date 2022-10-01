@@ -9,15 +9,6 @@
 using namespace sf;
 using namespace std;
 
-/* ComplexPlane::ComplexPlane()
-{
-    m_aspectRatio = 0.0;
-    m_view.setSize(0, 0 * 0);
-    m_view.setCenter(0.0, 0.0);
-    m_zoomCount = 0;
-
-} */
-
 ComplexPlane::ComplexPlane(float aspectRatio)
 {
     m_aspectRatio = aspectRatio;
