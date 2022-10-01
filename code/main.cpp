@@ -25,7 +25,7 @@ int main()
     Text text;
 
     //If font is unable to be loaded; print error
-    if (!font.loadFromFile("KOMIKAP_.ttf"))
+    if (!font.loadFromFile("fonts/KOMIKAP_.ttf"))
     {
         cout << "Error: Font File Not Found" << endl;
     }
@@ -101,4 +101,5 @@ int main()
 
     }
     
+    return 0;
 }
