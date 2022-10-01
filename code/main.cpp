@@ -37,9 +37,9 @@ int main()
 
     //Create VertexArray for background
     //Set primitive types to points
-    VertexArray background;
-    background.setPrimitiveType(Points);
-    background.resize(width * height);
+    VertexArray vArray;
+    vArray.setPrimitiveType(Points);
+    vArray.resize(width * height);
 
     //Create VideoMode object
     VideoMode vm(width, height);
@@ -52,8 +52,6 @@ int main()
     };
     //Initialize state to CALCULATING
     States calculating = States::CALCULATING;
-
-    vector <Vector2f> coords; 
     
     //Beging main loop
     while (window.isOpen())
@@ -67,18 +65,37 @@ int main()
                 {
                     view1.zoomOut();
                     view1.setCenter(window.mapPixelToCoords(Mouse::getPosition(window)));
+                    calculating = States::CALCULATING;
                 }
                 
                 else if(event.mouseButton.button == Mouse::Left)
                 {
                     view1.zoomIn();
                     view1.setCenter(window.mapPixelToCoords(Mouse::getPosition(window)));
+                    calculating = States::CALCULATING;
                 }
             }
-        }
-        if (Keyboard::isKeyPressed(Keyboard::Escape))
-        {
+
+            if (event.type == Event::MouseMoved)
+            {
+                view1.setMouseLocation(window.mapPixelToCoords(Mouse::getPosition(window)));
+            }
+
+            if (Keyboard::isKeyPressed(Keyboard::Escape))
+            {
             window.close();
+            }
+        }
+        
+        if (calculating == States::CALCULATING)
+        {
+            for (size_t j = 0; j < height; j++)
+            {
+                for (size_t i = 0; i < width; i++)
+                {
+                    vArray[j + i * width].position = {(float)j,(float)i};
+                }
+            }
         }
 
 
