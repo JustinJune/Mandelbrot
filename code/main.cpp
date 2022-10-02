@@ -53,9 +53,6 @@ int main()
     //Initialize state to CALCULATING
     States state = States::CALCULATING;
 
-    //Create 2 Dimensional Vector
-    vector<Vector2f> coords;
-    
     //Beging main loop
     while (window.isOpen())
     {
