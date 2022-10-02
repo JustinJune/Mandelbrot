@@ -100,10 +100,11 @@ int main()
 
         if (state == States::CALCULATING)
         {
-            //Create a double loop
-            //j is the height and i is the width
             size_t pixelHeight = view.getView().getSize().y;
             size_t pixelWidth = view.getView().getSize().x;
+
+            //Create a double loop
+            //j is the height and i is the width
             for (size_t j = 0; j < pixelHeight; j++)
             {
                 for (size_t i = 0; i < pixelWidth; i++)
@@ -120,10 +121,12 @@ int main()
                     Uint8 r, g, b;
                     view.iterationsToRGB(count, r, g, b);
                     vArray[j  +  i * pixelWidth].color = {r, g, b}; 
+                    state = States::DISPLAYING;
                 }
             }
-            state = States::DISPLAYING;
+            //state = States::DISPLAYING;
         }
+        
         view.loadText(text);
         //Clear everything from last frame
         window.clear();
