@@ -60,7 +60,7 @@ void ComplexPlane::loadText(Text &text)
 {
     stringstream display;
     
-    display << "  Center: (" << m_view.getCenter().x << "," << m_view.getCenter().y << ")" << endl 
+    display << "  Center: (" << (m_view.getCenter().x)<< "," << (m_view.getCenter().y) << ")" << endl 
     << "  Cursor: (" << m_mouseLocation.x <<"," << m_mouseLocation.y << ")" << endl<< "  Left-click to Zoom in" << endl << "  Right-click to Zoom out" << endl;
     
     //display << name << center << cursor << direction_left << direction_right;
@@ -93,36 +93,43 @@ void ComplexPlane::iterationsToRGB(size_t count, Uint8 &r, Uint8 &g, Uint8 &b)
 {
     if (count < 13)
     {
-        r = 0;
+        r = 102;
         g = 0;
-        b = 0;
+        b = 255;
     }
 
     else if (count >= 13 && count < 26)
     {
-        r = 100;
-        g = 250;
-        b = 5;
+        r = 0;
+        g = 190;
+        b = 255;
     }
 
     else if (count >= 26 && count < 39)
     {
         r = 0;
-        g = 0;
-        b = 0;
+        g = 255;
+        b = 90;
     }
 
     else if (count >= 39 && count < 52)
     {
-        r = 100;
-        g = 50;
-        b = 29;
+        r = 250;
+        g = 255;
+        b = 0;
+    }
+
+    else if( count >= 52 && count < 64)
+    {
+        r = 255;
+        g = 25;
+        b = 0;
     }
 
     else
     {
-        r = 87;
-        g = 39;
-        b = 156;
+        r = 0;
+        g = 0;
+        b = 0;
     }
 }
