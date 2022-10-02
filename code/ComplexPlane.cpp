@@ -6,6 +6,7 @@
 #include <vector>
 #include <cmath>
 #include <sstream>
+#include <complex>
 
 using namespace sf;
 using namespace std;
@@ -74,10 +75,61 @@ void ComplexPlane::loadText(Text &text)
 
 size_t ComplexPlane::countIterations(Vector2f coord)
 {
-    
+    double re = coord.x;
+    double im = coord.y;
+    size_t count = 0;
+    complex<double> z (0, 0);
+    complex<double> c (re, im);
+
+    for (size_t i = 0; i < MAX_ITER; i++)
+    {
+        z = pow(z, 2) + c;
+        
+        if (abs(z) <= 2.0 )
+        {
+            count += 1;
+        }
+
+        return count;
+    }
+
+
 }
 
 void ComplexPlane::iterationsToRGB(size_t count, Uint8 &r, Uint8 &g, Uint8 &b)
 {
-    
+    if (count < 13)
+    {
+        r = 0;
+        g = 0;
+        b = 0;
+    }
+
+    else if (count >= 13 && count < 26)
+    {
+        r = 0;
+        g = 0;
+        b = 0;
+    }
+
+    else if (count >= 26 && count < 39)
+    {
+        r = 0;
+        g = 0;
+        b = 0;
+    }
+
+    else if (count >= 39 && count < 52)
+    {
+        r = 0;
+        g = 0;
+        b = 0;
+    }
+
+    else
+    {
+        r = 0;
+        g = 0;
+        b = 0;
+    }
 }
