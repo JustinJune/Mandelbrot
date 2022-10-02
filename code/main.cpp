@@ -70,16 +70,17 @@ int main()
                 {
                     view.zoomOut();
                     view.setCenter(window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y), view.getView()));
-                    state = States::CALCULATING;
+                    //state = States::CALCULATING;
                 }
                 
                 //If left clicked: zoom in, set new center, change state to calculating
                 else if(event.mouseButton.button == Mouse::Left)
                 {
                     view.zoomIn();
-                    view.setCenter(window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y), view.getView()));
-                    state = States::CALCULATING;
+                    view.setCenter(window.mapPixelToCoords(Mouse::getPosition(window), view.getView()));
+                    //state = States::CALCULATING;
                 }
+                state = States::CALCULATING;
             }
 
             // Tell user the location their mouse is hovering at
@@ -118,14 +119,11 @@ int main()
                     view.iterationsToRGB(count, r, g, b);
                     vArray[j  +  i * width].color = {r, g, b};
                     
-                    //Change state to DISPLAYING to begin displaying text
-                    //Call loadText function
-                    state = States::DISPLAYING;
-                    view.loadText(text);
                 }
             }
+            state = States::DISPLAYING;
         }
-
+        view.loadText(text);
         //Clear everything from last frame
         window.clear();
 
