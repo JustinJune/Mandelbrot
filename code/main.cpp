@@ -18,7 +18,7 @@ int main()
     float aspect_ratio = height / width;
 
     //Create a ComplexPlane object
-    ComplexPlane view1(aspect_ratio);
+    ComplexPlane view(aspect_ratio);
 
     //Construct Font and Text objects
     Font font;
@@ -51,7 +51,10 @@ int main()
         DISPLAYING, CALCULATING
     };
     //Initialize state to CALCULATING
-    States calculating = States::CALCULATING;
+    States state = States::CALCULATING;
+
+    //Create 2 Dimensional Vector
+    vector<Vector2f> coords;
     
     //Beging main loop
     while (window.isOpen())
@@ -63,42 +66,58 @@ int main()
             {
                 if (event.mouseButton.button == Mouse::Right)
                 {
-                    view1.zoomOut();
-                    view1.setCenter(window.mapPixelToCoords(Mouse::getPosition(window)));
-                    calculating = States::CALCULATING;
+                    view.zoomOut();
+                    view.setCenter(window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y)));
+                    state = States::CALCULATING;
                 }
                 
                 else if(event.mouseButton.button == Mouse::Left)
                 {
-                    view1.zoomIn();
-                    view1.setCenter(window.mapPixelToCoords(Mouse::getPosition(window)));
-                    calculating = States::CALCULATING;
+                    view.zoomIn();
+                    view.setCenter(window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y)));
+                    state = States::CALCULATING;
                 }
             }
 
             if (event.type == Event::MouseMoved)
             {
-                view1.setMouseLocation(window.mapPixelToCoords(Mouse::getPosition(window)));
+                view.setMouseLocation(window.mapPixelToCoords(Mouse::getPosition(window)));
             }
 
             if (Keyboard::isKeyPressed(Keyboard::Escape))
             {
-            window.close();
+                window.close();
             }
         }
         
-        if (calculating == States::CALCULATING)
+        //Update Scene
+
+        if (state == States::CALCULATING)
         {
             for (size_t j = 0; j < height; j++)
             {
                 for (size_t i = 0; i < width; i++)
                 {
                     vArray[j + i * width].position = {(float)j,(float)i};
+                    
+                    size_t count = view.countIterations(window.mapPixelToCoords(Vector2i(j, i)));
+
+                    Uint8 r, g, b;
+                    view.iterationsToRGB(count, r, g, b);
+                    vArray[j  +  i * width].color = {r, g, b};
+                    
+                    state = States::DISPLAYING;
+                    view.loadText(text);
                 }
             }
         }
 
+        window.clear();
 
+        window.draw(vArray);
+        window.draw(text);
+
+        window.display();
     }
     
     return 0;
