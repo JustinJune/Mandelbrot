@@ -53,14 +53,19 @@ int main()
     //Initialize state to CALCULATING
     States state = States::CALCULATING;
 
-    //Beging main loop
+    //Begin main loop
     while (window.isOpen())
     {
+        //Create event object
         Event event;
+
+        //Handle User Input
         while (window.pollEvent(event))
         {
+            //Handle ouput for user input
             if (event.type == Event::KeyPressed)
             {
+                //If right clicked: zoom out, set new center,change state to calculating
                 if (event.mouseButton.button == Mouse::Right)
                 {
                     view.zoomOut();
@@ -68,6 +73,7 @@ int main()
                     state = States::CALCULATING;
                 }
                 
+                //If left clicked: zoom in, set new center, change state to calculating
                 else if(event.mouseButton.button == Mouse::Left)
                 {
                     view.zoomIn();
@@ -76,11 +82,13 @@ int main()
                 }
             }
 
+            // Tell user the location their mouse is hovering at
             if (event.type == Event::MouseMoved)
             {
                 view.setMouseLocation(window.mapPixelToCoords(Mouse::getPosition(window)));
             }
 
+            // Close window if user hits escape key
             if (Keyboard::isKeyPressed(Keyboard::Escape))
             {
                 window.close();
@@ -91,29 +99,41 @@ int main()
 
         if (state == States::CALCULATING)
         {
+            //Create a double loop
+            //j is the height and i is the width
             for (size_t j = 0; j < height; j++)
             {
                 for (size_t i = 0; i < width; i++)
                 {
+                    //Set the position variable in the element VertexArray that corresponds with screen coordinate
                     vArray[j + i * width].position = {(float)j,(float)i};
                     
+                    //Get iteration count and store them
                     size_t count = view.countIterations(window.mapPixelToCoords(Vector2i(j, i)));
 
+                    //Declare three Uint8 variables to store RGB values
+                    //Call iterationsToRGB function to assign RGB values by reference
+                    //Set the color variable in the element of VertexArray that corresponds with coordinate j and i
                     Uint8 r, g, b;
                     view.iterationsToRGB(count, r, g, b);
                     vArray[j  +  i * width].color = {r, g, b};
                     
+                    //Change state to DISPLAYING to begin displaying text
+                    //Call loadText function
                     state = States::DISPLAYING;
                     view.loadText(text);
                 }
             }
         }
 
+        //Clear everything from last frame
         window.clear();
 
+        //Draw mandelbrot and text again
         window.draw(vArray);
         window.draw(text);
 
+        //Display everything that was drawn
         window.display();
     }
     
