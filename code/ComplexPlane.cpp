@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <sstream>
 
 using namespace sf;
 using namespace std;
@@ -44,6 +45,11 @@ void ComplexPlane::setCenter(Vector2f coord)
     m_view.setCenter(coord);
 }
 
+View ComplexPlane::getView()
+{
+    return m_view;
+}
+
 void ComplexPlane::setMouseLocation(Vector2f coord)
 {
     m_mouseLocation = coord;
@@ -51,12 +57,24 @@ void ComplexPlane::setMouseLocation(Vector2f coord)
 
 void ComplexPlane::loadText(Text &text)
 {
+    stringstream center, cursor, name, direction_left, direction_right;
+    
+    name << "Mandelbrot Set";
+    center << "Center: (" << m_view.getCenter().x << "," << m_view.getCenter().y << ")";
+    cursor << "Cursor: (" << m_mouseLocation.x <<"," << m_mouseLocation.y << ")";
+    direction_left << "Left-click to Zoom in";
+    direction_right << "Right-click to Zoom out";
 
+    text.setString(name.str());
+    text.setString(center.str());
+    text.setString(cursor.str());
+    text.setString(direction_left.str());
+    text.setString(direction_right.str());
 }
 
 size_t ComplexPlane::countIterations(Vector2f coord)
 {
-
+    
 }
 
 void ComplexPlane::iterationsToRGB(size_t count, Uint8 &r, Uint8 &g, Uint8 &b)
