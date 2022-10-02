@@ -33,7 +33,7 @@ int main()
     //Set font, color, and size
     text.setFont(font);
     text.setFillColor(Color::White);
-    text.setCharacterSize(24);
+    text.setCharacterSize(14);
 
     //Create VertexArray for background
     //Set primitive types to points
@@ -69,7 +69,7 @@ int main()
                 if (event.mouseButton.button == Mouse::Right)
                 {
                     view.zoomOut();
-                    view.setCenter(window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y)));
+                    view.setCenter(window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y), view.getView()));
                     state = States::CALCULATING;
                 }
                 
@@ -77,7 +77,7 @@ int main()
                 else if(event.mouseButton.button == Mouse::Left)
                 {
                     view.zoomIn();
-                    view.setCenter(window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y)));
+                    view.setCenter(window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y), view.getView()));
                     state = States::CALCULATING;
                 }
             }
@@ -85,7 +85,7 @@ int main()
             // Tell user the location their mouse is hovering at
             if (event.type == Event::MouseMoved)
             {
-                view.setMouseLocation(window.mapPixelToCoords(Mouse::getPosition(window)));
+                view.setMouseLocation(window.mapPixelToCoords(Mouse::getPosition(window), view.getView()));
             }
 
             // Close window if user hits escape key
@@ -101,15 +101,15 @@ int main()
         {
             //Create a double loop
             //j is the height and i is the width
-            for (size_t j = 0; j < height; j++)
+            for (int j = 0; j < view.getView().getSize().y; j++)
             {
-                for (size_t i = 0; i < width; i++)
+                for (int i = 0; i < view.getView().getSize().x; i++)
                 {
                     //Set the position variable in the element VertexArray that corresponds with screen coordinate
                     vArray[j + i * width].position = {(float)j,(float)i};
                     
                     //Get iteration count and store them
-                    size_t count = view.countIterations(window.mapPixelToCoords(Vector2i(j, i)));
+                    size_t count = view.countIterations(window.mapPixelToCoords(Vector2i(j, i), view.getView()));
 
                     //Declare three Uint8 variables to store RGB values
                     //Call iterationsToRGB function to assign RGB values by reference

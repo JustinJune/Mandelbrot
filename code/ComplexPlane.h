@@ -5,7 +5,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#pragma once
 
 using namespace sf;
 using namespace std;
