@@ -72,21 +72,17 @@ size_t ComplexPlane::countIterations(Vector2f coord)
 {
     double re = coord.x;
     double im = coord.y;
-    size_t count = 0;
     complex<double> z (0, 0);
     complex<double> c (re, im);
 
-    for (size_t i = 0; i < MAX_ITER; i++)
+    size_t i;
+
+    for (i = 0; i < MAX_ITER && abs(z) <= 2.0; i++)
     {
         z = pow(z, 2) + c;
-        
-        if (abs(z) <= 2.0 )
-        {
-            count += 1;
-        }
     }
     
-    return count;
+    return i;
 }
 
 void ComplexPlane::iterationsToRGB(size_t count, Uint8 &r, Uint8 &g, Uint8 &b)

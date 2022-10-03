@@ -63,9 +63,9 @@ int main()
         while (window.pollEvent(event))
         {
             //Handle ouput for user input
-            if (event.type == Event::KeyPressed)
+            if (event.type == Event::MouseButtonPressed)
             {
-                Vector2f userClickLocation = window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y));
+                Vector2f userClickLocation = window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y), view.getView());
                 
                 //If right clicked: zoom out, set new center,change state to calculating
                 if (event.mouseButton.button == Mouse::Right)
@@ -90,28 +90,33 @@ int main()
                 view.setMouseLocation(window.mapPixelToCoords(Mouse::getPosition(window), view.getView()));
             }
 
-            // Close window if user hits escape key
-            if (Keyboard::isKeyPressed(Keyboard::Escape))
+            if (event.type == Event::Closed)
             {
                 window.close();
             }
+
         }
         
+        if (Keyboard::isKeyPressed(Keyboard::Escape))
+        {
+            window.close();
+
+        }
         //Update Scene
 
         if (state == States::CALCULATING)
         {
-            size_t pixelHeight = view.getView().getSize().y;
-            size_t pixelWidth = view.getView().getSize().x;
+            //size_t pixelHeight = view.getView().getSize().y;
+            //size_t pixelWidth = view.getView().getSize().x;
 
             //Create a double loop
             //j is the height and i is the width
-            for (size_t j = 0; j < pixelHeight; j++)
+            for (size_t j = 0; j < width; j++)
             {
-                for (size_t i = 0; i < pixelWidth; i++)
+                for (size_t i = 0; i < height; i++)
                 {
                     //Set the position variable in the element VertexArray that corresponds with screen coordinate
-                    vArray[j + i * pixelWidth].position = {(float)j,(float)i};
+                    vArray[j + i * width].position = {(float)j,(float)i};
                     
                     //Get iteration count and store them
                     size_t count = view.countIterations(window.mapPixelToCoords(Vector2i(j, i), view.getView()));
@@ -124,7 +129,7 @@ int main()
                     g = 255;
                     b = 255;
                     view.iterationsToRGB(count, r, g, b);
-                    vArray[j  +  i * pixelWidth].color = {r, g, b}; 
+                    vArray[j  +  i * width].color = {r, g, b}; 
                 }
             }
             //state = States::DISPLAYING;
