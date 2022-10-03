@@ -65,7 +65,8 @@ int main()
             //Handle ouput for user input
             if (event.type == Event::KeyPressed)
             {
-                Vector2f userClickLocation = window.mapPixelToCoords(Mouse::getPosition(window), view.getView());
+                Vector2f userClickLocation = window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y));
+                
                 //If right clicked: zoom out, set new center,change state to calculating
                 if (event.mouseButton.button == Mouse::Right)
                 {
@@ -119,12 +120,15 @@ int main()
                     //Call iterationsToRGB function to assign RGB values by reference
                     //Set the color variable in the element of VertexArray that corresponds with coordinate j and i
                     Uint8 r, g, b;
+                    r = 255;
+                    g = 255;
+                    b = 255;
                     view.iterationsToRGB(count, r, g, b);
                     vArray[j  +  i * pixelWidth].color = {r, g, b}; 
-                    state = States::DISPLAYING;
                 }
             }
             //state = States::DISPLAYING;
+            state = States::DISPLAYING;
         }
         
         view.loadText(text);
